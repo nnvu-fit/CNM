@@ -39,7 +39,7 @@
             // lbUser
             // 
             this.lbUser.AutoSize = true;
-            this.lbUser.Location = new System.Drawing.Point(13, 26);
+            this.lbUser.Location = new System.Drawing.Point(25, 47);
             this.lbUser.Name = "lbUser";
             this.lbUser.Size = new System.Drawing.Size(55, 13);
             this.lbUser.TabIndex = 0;
@@ -47,7 +47,7 @@
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(155, 26);
+            this.txtUser.Location = new System.Drawing.Point(131, 44);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(100, 20);
             this.txtUser.TabIndex = 1;
@@ -55,7 +55,7 @@
             // lbPass
             // 
             this.lbPass.AutoSize = true;
-            this.lbPass.Location = new System.Drawing.Point(13, 59);
+            this.lbPass.Location = new System.Drawing.Point(25, 101);
             this.lbPass.Name = "lbPass";
             this.lbPass.Size = new System.Drawing.Size(53, 13);
             this.lbPass.TabIndex = 2;
@@ -63,7 +63,7 @@
             // 
             // txtPass
             // 
-            this.txtPass.Location = new System.Drawing.Point(155, 59);
+            this.txtPass.Location = new System.Drawing.Point(131, 98);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
             this.txtPass.Size = new System.Drawing.Size(100, 20);
@@ -71,7 +71,7 @@
             // 
             // btCancel
             // 
-            this.btCancel.Location = new System.Drawing.Point(12, 156);
+            this.btCancel.Location = new System.Drawing.Point(28, 165);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 4;
@@ -81,7 +81,7 @@
             // 
             // btLogin
             // 
-            this.btLogin.Location = new System.Drawing.Point(175, 156);
+            this.btLogin.Location = new System.Drawing.Point(156, 165);
             this.btLogin.Name = "btLogin";
             this.btLogin.Size = new System.Drawing.Size(75, 23);
             this.btLogin.TabIndex = 5;
@@ -93,7 +93,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(277, 249);
             this.Controls.Add(this.btLogin);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.txtPass);

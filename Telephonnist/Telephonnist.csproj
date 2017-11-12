@@ -87,5 +87,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Maps\tsx\Maps.tsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Maps\css\" />
+    <Folder Include="Maps\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Maps\Maps.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

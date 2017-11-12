@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telephonnist", "Telephonnist\Telephonnist.csproj", "{11521A61-6397-441D-A4C2-D86B4B8B8FA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.csproj", "{A154CBE5-A056-49B1-8C4A-591418A1F4B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{11521A61-6397-441D-A4C2-D86B4B8B8FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11521A61-6397-441D-A4C2-D86B4B8B8FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11521A61-6397-441D-A4C2-D86B4B8B8FA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A154CBE5-A056-49B1-8C4A-591418A1F4B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A154CBE5-A056-49B1-8C4A-591418A1F4B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A154CBE5-A056-49B1-8C4A-591418A1F4B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A154CBE5-A056-49B1-8C4A-591418A1F4B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

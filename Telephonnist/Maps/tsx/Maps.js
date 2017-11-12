@@ -1,0 +1,7 @@
+// A '.tsx' file enables JSX support in the TypeScript compiler, 
+// for more information see the following page on the TypeScript wiki:
+// https://github.com/Microsoft/TypeScript/wiki/JSX
+window.onload = function () {
+    document.getElementById("aaa").innerHTML = "aaaaaaa";
+};
+//# sourceMappingURL=Maps.js.map
