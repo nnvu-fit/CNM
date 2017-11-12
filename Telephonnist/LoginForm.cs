@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http;
 
 namespace Telephonnist
 {
@@ -28,11 +29,15 @@ namespace Telephonnist
             string Pass = txtPass.Text;
 
             //  Send Request;
+            HttpClient client = new HttpClient();
+
             bool isCorrect = true;
+            // get Response
+            string Url = "google.com";
 
             if (isCorrect)
             {
-                MainFrame main = new MainFrame();
+                MainFrame main = new MainFrame(Url);
                 main.Show();
                 Visible = false;
             }

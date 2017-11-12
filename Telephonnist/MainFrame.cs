@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http;
 
 namespace Telephonnist
 {
@@ -16,17 +17,27 @@ namespace Telephonnist
         public MainFrame()
         {
             InitializeComponent();
-            string curDir = Directory.GetCurrentDirectory();
-            wbMap.Url = new Uri(String.Format("file:///{0}/../../Maps/Maps.html", curDir));
         }
 
-        private void MainFrame_Close(object sender, EventArgs e)
+        public MainFrame(string Url)
+        {
+            InitializeComponent();
+            wbMaps.Navigate(Url);
+            int iWidth = tabDriver.Width;
+            tabDriver.Controls.Add(new Button()
+            {
+                Width = iWidth
+            });
+        }
+
+        public void MainFrame_Close(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
 
-        private void View_Click(object sender, EventArgs e)
+        private void TabPage1_Click(object sender, EventArgs e)
         {
+
         }
     }
 }
