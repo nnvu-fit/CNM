@@ -10,9 +10,9 @@ namespace ServerBARG.Models
         string phone;
         string address;
         string addressFormated;
-        string status;
+        int status;
         int time;
-        string typeCar;
+        int typeCar;
 
         public string Phone
         {
@@ -53,7 +53,7 @@ namespace ServerBARG.Models
             }
         }
 
-        public string Status
+        public int Status
         {
             get
             {
@@ -66,7 +66,7 @@ namespace ServerBARG.Models
             }
         }
 
-        public string TypeCar
+        public int TypeCar
         {
             get
             {
