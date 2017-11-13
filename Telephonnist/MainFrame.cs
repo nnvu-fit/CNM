@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Http;
+using CefSharp;
+using CefSharp.WinForms;
 
 namespace Telephonnist
 {
@@ -19,10 +21,22 @@ namespace Telephonnist
             InitializeComponent();
         }
 
+        public ChromiumWebBrowser browser;
+
         public MainFrame(string Url)
         {
             InitializeComponent();
-            wbMaps.Navigate(Url);
+
+            var settings = new CefSettings();
+            settings.BrowserSubprocessPath = @"x86\CefSharp.BrowserSubprocess.exe";
+
+            Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
+
+            browser = new ChromiumWebBrowser(Url);
+
+            gbMaps.Controls.Add(browser);
+            browser.Dock = DockStyle.Fill;
+
             int iWidth = tabDriver.Width;
             tabDriver.Controls.Add(new Button()
             {
@@ -45,6 +59,11 @@ namespace Telephonnist
             LoginForm loginForm = (LoginForm)Application.OpenForms["LoginForm"];
             loginForm.Visible = true;
             Visible = false;
+        }
+
+        private void rdbStandard_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
