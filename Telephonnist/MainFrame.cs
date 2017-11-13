@@ -39,5 +39,12 @@ namespace Telephonnist
         {
 
         }
+
+        private void BtLogout_Click(object sender, EventArgs e)
+        {
+            LoginForm loginForm = (LoginForm)Application.OpenForms["LoginForm"];
+            loginForm.Visible = true;
+            Visible = false;
+        }
     }
 }

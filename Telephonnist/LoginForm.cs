@@ -33,7 +33,7 @@ namespace Telephonnist
 
             bool isCorrect = true;
             // get Response
-            string Url = "google.com";
+            string Url = "https://www.google.com/maps";
 
             if (isCorrect)
             {
