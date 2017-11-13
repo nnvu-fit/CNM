@@ -15,7 +15,7 @@ namespace ServerBARG.Controllers
     {
         [HttpPut]
         [Route("api/managerapp1/putcall")]
-        public HttpResponseMessage GetMoney([FromBody]Call call)
+        public HttpResponseMessage PutCall([FromBody]Call call)
         {
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(
                 new
@@ -26,14 +26,32 @@ namespace ServerBARG.Controllers
                     time = call.Time,
                     typeCar = call.TypeCar
                 });
-            var request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/" + call.Phone + "/.json");
+            HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/" + call.Phone + "/.json");
             request.Method = "PUT";
             request.ContentType = "application/json";
             var buffer = Encoding.UTF8.GetBytes(json);
             request.ContentLength = buffer.Length;
             request.GetRequestStream().Write(buffer, 0, buffer.Length);
-            var response = request.GetResponse();
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
             return Request.CreateResponse(response);
+        }
+
+        [HttpGet]
+        [Route("api/managerapp1/getcall/{phone}")]
+        public HttpResponseMessage GetCall(string phone)
+        {
+            string res;
+            HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/" + phone + "/.json");
+            request.Method = "Get";
+            request.ContentType = "application/json : ";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responsestream = response.GetResponseStream())
+            {
+                StreamReader Read = new StreamReader(responsestream, Encoding.UTF8);
+                res = Read.ReadToEnd();
+                Console.WriteLine(Read.ReadToEnd());
+            }
+                return Request.CreateResponse(res);
         }
     }
 }
