@@ -15,7 +15,7 @@ namespace ServerBARG.Controllers
     public class AppOneController : ApiController
     {
         [HttpPut]
-        [Route("api/managerapp1/putcall")]
+        [Route("api/managerappone/addcall")]
         public HttpResponseMessage PutCall([FromBody]Call call)
         {
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(
@@ -38,7 +38,7 @@ namespace ServerBARG.Controllers
         }
 
         [HttpGet]
-        [Route("api/managerapp1/getcall/{phone}")]
+        [Route("api/managerappone/getinformationcall/{phone}")]
         public HttpResponseMessage GetCall(string phone)
         {
             JObject json;
@@ -57,8 +57,8 @@ namespace ServerBARG.Controllers
         }
 
         [HttpGet]
-        [Route("api/managerapp1/getdriver")]
-        public HttpResponseMessage GetDriver()
+        [Route("api/managerappone/getinformationaddress/{address}")]
+        public HttpResponseMessage GetDriver(string address)
         {
             HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver.json");
             request.Method = "Get";
