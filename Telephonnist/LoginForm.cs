@@ -13,10 +13,14 @@ namespace Telephonnist
 {
     public partial class LoginForm : Form
     {
+        private bool mainFrameOpened;
+
         public LoginForm()
         {
             InitializeComponent();
         }
+
+        public bool MainFrameOpened { get => mainFrameOpened; set => mainFrameOpened = value; }
 
         private void BtCancel_Click(object sender, EventArgs e)
         {
@@ -37,9 +41,10 @@ namespace Telephonnist
 
             if (isCorrect)
             {
-                MainFrame main = new MainFrame(Url);
-                main.Show();
+                MainFrame main = (mainFrameOpened ? (MainFrame)Application.OpenForms["MainFrame"] : new MainFrame(Url));
+                main.Visible = true;
                 Visible = false;
+                mainFrameOpened = true;
             }
             else
             {
