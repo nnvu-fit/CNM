@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - coordinates</title>
+    <base href="~/" />
+
+    <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    @RenderBody()
+
+    <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8
+            });
+        };
+    </script>
+    <script src="~/dist/vendor.js" asp-append-version="true"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4obhNpP5_1vHUyDC8rndv5jTaSxJI628" async defer></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
