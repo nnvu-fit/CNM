@@ -10,9 +10,16 @@ namespace ServerBARG.Models
         string phone;
         string address;
         string addressFormated;
+        //status
+        //    0 : chưa xac định tọa độ 
+        //    1 : đang tìm xe
+        //    2 : đã định vị
+        //    3 : không có xe
         int status;
-        int time;
+        long time;
         int typeCar;
+        long lat;
+        long lng;
 
         public string Phone
         {
@@ -79,7 +86,7 @@ namespace ServerBARG.Models
             }
         }
 
-        public int Time
+        public long Time
         {
             get
             {
@@ -89,6 +96,32 @@ namespace ServerBARG.Models
             set
             {
                 time = value;
+            }
+        }
+
+        public long Lat
+        {
+            get
+            {
+                return lat;
+            }
+
+            set
+            {
+                lat = value;
+            }
+        }
+
+        public long Lng
+        {
+            get
+            {
+                return lng;
+            }
+
+            set
+            {
+                lng = value;
             }
         }
     }
