@@ -31,6 +31,16 @@ namespace Telephonnist
 
     class Driver
     {
+        private string name;
+        private string lat;
+        private string lng;
+        private int status;
+        private int typeCard;
 
+        public string Name { get => name; set => name = value; }
+        public int Status { get => status; set => status = value; }
+        public int TypeCard { get => typeCard; set => typeCard = value; }
+        public string Lat { get => lat; set => lat = value; }
+        public string Lng { get => lng; set => lng = value; }
     }
 }

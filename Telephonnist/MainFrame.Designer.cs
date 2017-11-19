@@ -37,6 +37,8 @@
             this.lName = new System.Windows.Forms.Label();
             this.lUsername = new System.Windows.Forms.Label();
             this.gbCaller = new System.Windows.Forms.GroupBox();
+            this.tbTo = new System.Windows.Forms.TextBox();
+            this.lTo = new System.Windows.Forms.Label();
             this.btLook = new System.Windows.Forms.Button();
             this.gbType = new System.Windows.Forms.GroupBox();
             this.rdbStandard = new System.Windows.Forms.RadioButton();
@@ -53,8 +55,6 @@
             this.lCallerName = new System.Windows.Forms.Label();
             this.lPhone = new System.Windows.Forms.Label();
             this.tbPhone = new System.Windows.Forms.TextBox();
-            this.tbTo = new System.Windows.Forms.TextBox();
-            this.lTo = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.gbTelephonistDetail.SuspendLayout();
             this.gbCaller.SuspendLayout();
@@ -165,9 +165,26 @@
             this.gbCaller.TabStop = false;
             this.gbCaller.Text = "Caller Detail";
             // 
+            // tbTo
+            // 
+            this.tbTo.Location = new System.Drawing.Point(6, 183);
+            this.tbTo.Multiline = true;
+            this.tbTo.Name = "tbTo";
+            this.tbTo.Size = new System.Drawing.Size(220, 80);
+            this.tbTo.TabIndex = 12;
+            // 
+            // lTo
+            // 
+            this.lTo.AutoSize = true;
+            this.lTo.Location = new System.Drawing.Point(6, 167);
+            this.lTo.Name = "lTo";
+            this.lTo.Size = new System.Drawing.Size(20, 13);
+            this.lTo.TabIndex = 13;
+            this.lTo.Text = "To";
+            // 
             // btLook
             // 
-            this.btLook.Location = new System.Drawing.Point(33, 345);
+            this.btLook.Location = new System.Drawing.Point(20, 345);
             this.btLook.Name = "btLook";
             this.btLook.Size = new System.Drawing.Size(75, 23);
             this.btLook.TabIndex = 11;
@@ -313,23 +330,6 @@
             this.tbPhone.Size = new System.Drawing.Size(138, 20);
             this.tbPhone.TabIndex = 0;
             this.tbPhone.TextChanged += new System.EventHandler(this.TbPhone_TextChanged);
-            // 
-            // tbTo
-            // 
-            this.tbTo.Location = new System.Drawing.Point(6, 183);
-            this.tbTo.Multiline = true;
-            this.tbTo.Name = "tbTo";
-            this.tbTo.Size = new System.Drawing.Size(220, 80);
-            this.tbTo.TabIndex = 12;
-            // 
-            // lTo
-            // 
-            this.lTo.AutoSize = true;
-            this.lTo.Location = new System.Drawing.Point(6, 167);
-            this.lTo.Name = "lTo";
-            this.lTo.Size = new System.Drawing.Size(20, 13);
-            this.lTo.TabIndex = 13;
-            this.lTo.Text = "To";
             // 
             // MainFrame
             // 

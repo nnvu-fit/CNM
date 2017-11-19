@@ -16,6 +16,21 @@ namespace Telephonnist
         private ChromiumWebBrowser browser;
         private Driver[] drivers;
 
+        class DriverBox
+        {
+            private GroupBox box;
+            private Label name, lat, lng;
+            private Button button;
+
+            public GroupBox Box { get => box; set => box = value; }
+            public Button Button { get => button; set => button = value; }
+            public Label Name { get => name; set => name = value; }
+            public Label Lat { get => lat; set => lat = value; }
+            public Label Lng { get => lng; set => lng = value; }
+        };
+
+        private DriverBox[] DriverBoxs;
+
         public MainFrame()
         {
             InitializeComponent();
@@ -92,7 +107,7 @@ namespace Telephonnist
         {
             if (tbPhone.Text.Length < 1)
                 return;
-            HttpWebRequest webResquest = WebRequest.CreateHttp("http://localhost:56081/managerappone/getinformationcall/" + tbPhone.Text);
+            HttpWebRequest webResquest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/getinformationcall/" + tbPhone.Text);
             webResquest.Method = "GET";
             webResquest.ContentType = "application/json";
             HttpWebResponse webResponse = null;
@@ -112,6 +127,18 @@ namespace Telephonnist
 
                     jsonStream.Close();
                 }
+                tbFrom.Text = user.Address;
+                tbTo.Text = user.AddressFormated;
+                if (user.TypeCar == 0)
+                {
+                    rdbStandard.Checked = true;
+                    rdbPremium.Checked = false;
+                }
+                else
+                {
+                    rdbStandard.Checked = false;
+                    rdbPremium.Checked = true;
+                }
                 btLook.Show();
                 btFind.Hide();
             }
@@ -130,7 +157,7 @@ namespace Telephonnist
                             time = user.Time,
                             typeCar = user.TypeCar
                         });
-                    webResquest = WebRequest.CreateHttp("http://localhost:56081/managerappone/addcall" + user.Phone);
+                    webResquest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/addcall" + user.Phone);
                     webResquest.Method = "PUT";
                     webResquest.ContentType = "application/json";
                     var buff = Encoding.UTF8.GetBytes(json);
@@ -173,7 +200,7 @@ namespace Telephonnist
                     Phone = tbPhone.Text,
                     address = tbFrom.Text
                 });
-            HttpWebRequest webRequest = WebRequest.CreateHttp("http://localhost:56081/managerappone/getinformationaddress/");
+            HttpWebRequest webRequest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/getinformationaddress/");
             webRequest.Method = "POST";
             webRequest.ContentType = "application/json";
             var buff = Encoding.UTF8.GetBytes(json);
@@ -183,6 +210,47 @@ namespace Telephonnist
             try
             {
                 webResponse = webRequest.GetResponse() as HttpWebResponse;
+                if (webResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    if (webResponse != null)
+                        webResponse.Close();
+                    return;
+                }
+                using (var jsonStream = new StreamReader(webResponse.GetResponseStream()))
+                {
+                    var buffReader = jsonStream.ReadToEnd();
+                    drivers = JsonConvert.DeserializeObject<Driver[]>(buffReader);
+                    DriverBoxs = new DriverBox[drivers.Length];
+                    for (int ii = 0; ii < DriverBoxs.Length; ii++)
+                    {
+                        DriverBoxs[ii] = new DriverBox();
+                        tabDriver.Controls.Add(DriverBoxs[ii].Box);
+                        DriverBoxs[ii].Box.Height = 60;
+                        DriverBoxs[ii].Box.Width = tabDriver.Width;
+                        DriverBoxs[ii].Box.Text = "Driver" + ii.ToString();
+
+                        DriverBoxs[ii].Name = new Label();
+                        DriverBoxs[ii].Box.Controls.Add(DriverBoxs[ii].Name);
+                        DriverBoxs[ii].Name.Width = DriverBoxs[ii].Box.Width;
+                        DriverBoxs[ii].Name.Text = "Name: "+ drivers[ii].Name;
+
+                        DriverBoxs[ii].Lat = new Label();
+                        DriverBoxs[ii].Box.Controls.Add(DriverBoxs[ii].Lat);
+                        DriverBoxs[ii].Lat.Width = DriverBoxs[ii].Box.Width;
+                        DriverBoxs[ii].Lat.Text = "Lat: " + drivers[ii].Lat;
+
+                        DriverBoxs[ii].Lng = new Label();
+                        DriverBoxs[ii].Box.Controls.Add(DriverBoxs[ii].Lng);
+                        DriverBoxs[ii].Lng.Width = DriverBoxs[ii].Box.Width;
+                        DriverBoxs[ii].Lng.Text = "Lng: " + drivers[ii].Lng;
+
+                        DriverBoxs[ii].Button = new Button();
+                        DriverBoxs[ii].Box.Controls.Add(DriverBoxs[ii].Button);
+                        DriverBoxs[ii].Button.Width = DriverBoxs[ii].Box.Width;
+                        DriverBoxs[ii].Button.Text = "Book this car";
+                        DriverBoxs[ii].Button.Left = (DriverBoxs[ii].Box.Width - DriverBoxs[ii].Button.Width) / 2 - 1;
+                    }
+                }
                 btFind.Show();
                 btLook.Hide();
             }
