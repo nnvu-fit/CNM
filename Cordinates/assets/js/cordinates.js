@@ -8,6 +8,9 @@ function initMap() {
 }
 
 var LocationsList = [];
+var currentLocation;
+var currentMarker;
+var currentInfo;
 
 function getLocationList() {
   $('#GetAllLocations').last().remove();
@@ -21,6 +24,34 @@ function getLocationList() {
   });
 }
 
+$('#Location-List').on('click', '.mark', function() {
+  var id = $(this).data('id');
+  $.each(LocationsList, function(key, value) {
+    if (value.id == id) {
+      currentLocation = value;
+    };
+  });
+  if (currentLocation) {
+    if (currentLocation.status == 0) {
+      alert("error");
+    } else {
+      var pos = {lat: currentLocation.lat, lng: currentLocation.lng};
+      currentMarker = new google.maps.Marker({
+        position: pos,
+        title: currentLocation.name,
+        map: map
+      });
+      currentInfo = new google.maps.InfoWindow({
+        content: 'name: ' + currentLocation.name + '<br/>' + 'address: ' + currentLocation.addressFormated
+      })
+      map.setCenter(pos);
+      map.setZoom(13);
+      currentMarker.addListener('click', function() {
+        currentInfo.open(map, currentMarker);
+      })
+    };
+  };
+})
 
 window.onload = function(e) {
   var windowHeight = $(window).height() - 65;

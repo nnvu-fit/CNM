@@ -1,68 +1,20 @@
 [
 	{
-		"name": "as"
+		"id" : 0,
+		"name" : "as",
+		"status" : 1,
+		"address" : "101 Dương Bá Trạc, Phường 1, Quận 8",
+		"addressFormated" : "101 Dương Bá Trạc, Phường 1, Quận 8",
+		"lat" : 10.7346776674577,
+		"lng" : 106.617092211527
 	},
 	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "as"
-	},
-	{
-		"name": "bs"
+		"id" : 1,
+		"name": "bs",
+		"status" : 0,
+		"address" : "102 Dương Bá Trạc, Phường 1, Quận 8",
+		"addressFormated" : "102 Dương Bá Trạc, Phường 1, Quận 8",
+		"lat" : 0,
+		"lng" : 0
 	}
 ]
