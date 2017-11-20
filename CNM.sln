@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telephonnist", "Telephonnis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerBARG", "ServerBARG\ServerBARG.csproj", "{A885941D-D84B-442A-AB0D-3347F36D22AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "coordinates", "coordinates\coordinates.csproj", "{1FC39FEC-79B1-484C-ABA1-192E12362EF2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{A885941D-D84B-442A-AB0D-3347F36D22AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A885941D-D84B-442A-AB0D-3347F36D22AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A885941D-D84B-442A-AB0D-3347F36D22AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1FC39FEC-79B1-484C-ABA1-192E12362EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FC39FEC-79B1-484C-ABA1-192E12362EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FC39FEC-79B1-484C-ABA1-192E12362EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FC39FEC-79B1-484C-ABA1-192E12362EF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
