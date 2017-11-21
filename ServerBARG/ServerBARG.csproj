@@ -92,6 +92,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Call.cs" />
+    <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\FindCar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

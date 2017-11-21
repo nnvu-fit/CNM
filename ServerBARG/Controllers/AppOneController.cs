@@ -112,7 +112,7 @@ namespace ServerBARG.Controllers
         #region tìm xe trong khu vực
         [HttpPut]
         [Route("api/managerappone/finddriver")]
-        public HttpResponseMessage FindDriver()
+        public HttpResponseMessage FindDriver([FromBody]FindCar find)
         {
             string URL = "https://barg-9f201.firebaseio.com/driver.json";
             HttpWebRequest request = WebRequest.CreateHttp(URL);
@@ -124,11 +124,116 @@ namespace ServerBARG.Controllers
                 var Read = new StreamReader(responsestream).ReadToEnd();
                 if (Read == "null")
                     return Request.CreateResponse(HttpStatusCode.NotFound);
-                var json = JsonConvert.DeserializeObject(Read);
-                return Request.CreateResponse(HttpStatusCode.OK, json);
+                JArray listcar = findCar(Read, find);
+                if (listcar == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, listcar);
             }
+        }
+
+        private JArray findCar(string listcar, FindCar find)
+        {
+            JArray array = new JArray();
+            List<Car> list = JsonConvert.DeserializeObject<List<Car>>(listcar);
+            foreach (Car tem in list)
+            {
+                var distance = new Coordinates(find.Lat, find.Lng)
+                .DistanceTo(
+                    new Coordinates(tem.Lat, tem.Lng),
+                    UnitOfLength.Kilometers 
+                );
+                if(distance <= (find.Radius) / 1000)
+                {
+                    var json = JsonConvert.SerializeObject(tem, Formatting.Indented);
+                    JObject jobject = JObject.Parse(json);
+                    array.Add(jobject);
+                }
+            }
+            return array;
         }
         #endregion
 
+        #region  Đặt xe
+        [HttpPut]
+        [Route("api/managerappone/book/")]
+        public HttpResponseMessage BookCar([FromBody]Car car)
+        {
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(
+                new
+                {
+                    id = car.Id,
+                    name = car.Name,
+                    typeCar = car.TypeCar,
+                    status = car.Status,
+                    lat = car.Lat,
+                    lng = car.Lng
+                });
+            HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + car.Id + ".json");
+            request.Method = "PUT";
+            request.ContentType = "application/json";
+            var buffer = Encoding.UTF8.GetBytes(json);
+            request.ContentLength = buffer.Length;
+            request.GetRequestStream().Write(buffer, 0, buffer.Length);
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            return Request.CreateResponse(response.StatusCode);
+        }
+        #endregion
+
+    }
+    public class Coordinates
+    {
+        public double Latitude { get; private set; }
+        public double Longitude { get; private set; }
+
+        public Coordinates(double latitude, double longitude)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+        }
+    }
+    public static class CoordinatesDistanceExtensions
+    {
+        public static double DistanceTo(this Coordinates baseCoordinates, Coordinates targetCoordinates)
+        {
+            return DistanceTo(baseCoordinates, targetCoordinates, UnitOfLength.Kilometers);
+        }
+
+        public static double DistanceTo(this Coordinates baseCoordinates, Coordinates targetCoordinates, UnitOfLength unitOfLength)
+        {
+            var baseRad = Math.PI * baseCoordinates.Latitude / 180;
+            var targetRad = Math.PI * targetCoordinates.Latitude / 180;
+            var theta = baseCoordinates.Longitude - targetCoordinates.Longitude;
+            var thetaRad = Math.PI * theta / 180;
+
+            double dist =
+                Math.Sin(baseRad) * Math.Sin(targetRad) + Math.Cos(baseRad) *
+                Math.Cos(targetRad) * Math.Cos(thetaRad);
+            dist = Math.Acos(dist);
+
+            dist = dist * 180 / Math.PI;
+            dist = dist * 60 * 1.1515;
+
+            return unitOfLength.ConvertFromMiles(dist);
+        }
+    }
+    public class UnitOfLength
+    {
+        public static UnitOfLength Kilometers = new UnitOfLength(1.609344);
+        public static UnitOfLength NauticalMiles = new UnitOfLength(0.8684);
+        public static UnitOfLength Miles = new UnitOfLength(1);
+
+        private readonly double _fromMilesFactor;
+
+        private UnitOfLength(double fromMilesFactor)
+        {
+            _fromMilesFactor = fromMilesFactor;
+        }
+
+        public double ConvertFromMiles(double input)
+        {
+            return input * _fromMilesFactor;
+        }
     }
 }
