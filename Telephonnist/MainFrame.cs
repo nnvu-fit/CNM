@@ -7,6 +7,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Telephonnist
 {
@@ -14,29 +15,108 @@ namespace Telephonnist
     {
         private User user;
         private ChromiumWebBrowser browser;
-        private Driver[] drivers;
-
+        List<Driver> drivers;
         class DriverBox
         {
+            public DriverBox()
+            {
+                box = new GroupBox();
+                Name = new Label();
+                Lat = new Label();
+                Lng = new Label();
+                button = new Button();
+            }
             private GroupBox box;
             private Label name, lat, lng;
             private Button button;
 
-            public GroupBox Box { get => box; set => box = value; }
-            public Button Button { get => button; set => button = value; }
-            public Label Name { get => name; set => name = value; }
-            public Label Lat { get => lat; set => lat = value; }
-            public Label Lng { get => lng; set => lng = value; }
+            public GroupBox Box
+            {
+                get
+                {
+                    return box;
+                }
+
+                set
+                {
+                    box = value;
+                }
+            }
+
+
+
+            public Button Button
+            {
+                get
+                {
+                    return button;
+                }
+
+                set
+                {
+                    button = value;
+                }
+            }
+
+            public Label Lat
+            {
+                get
+                {
+                    return lat;
+                }
+
+                set
+                {
+                    lat = value;
+                }
+            }
+
+            public Label Lng
+            {
+                get
+                {
+                    return lng;
+                }
+
+                set
+                {
+                    lng = value;
+                }
+            }
+
+            public Label Name
+            {
+                get
+                {
+                    return name;
+                }
+
+                set
+                {
+                    name = value;
+                }
+            }
         };
 
         private DriverBox[] DriverBoxs;
+
+        public ChromiumWebBrowser Browser
+        {
+            get
+            {
+                return browser;
+            }
+
+            set
+            {
+                browser = value;
+            }
+        }
 
         public MainFrame()
         {
             InitializeComponent();
         }
-
-        public ChromiumWebBrowser Browser { get => browser; set => browser = value; }
 
         public MainFrame(string Url)
         {
@@ -79,15 +159,15 @@ namespace Telephonnist
 
         private void RdbStandard_CheckedChanged(object sender, EventArgs e)
         {
-            rdbPremium.Checked = false;
-            rdbStandard.Checked = true;
+            //rdbPremium.Checked = false;
+            //rdbStandard.Checked = true;
             user.TypeCar = 0;
         }
 
         private void RdbPremium_CheckedChanged(object sender, EventArgs e)
         {
-            rdbPremium.Checked = true;
-            rdbStandard.Checked = false;
+            //rdbPremium.Checked = true;
+            //rdbStandard.Checked = false;
             user.TypeCar = 1;
         }
 
@@ -111,6 +191,10 @@ namespace Telephonnist
             webResquest.Method = "GET";
             webResquest.ContentType = "application/json";
             HttpWebResponse webResponse = null;
+            label_his_phone.Text = tbPhone.Text;
+            label_his_addr.Text = tbFrom.Text;
+            label_his_status.Text = "0";
+            label_his_type.Text = user.TypeCar.ToString();
             try
             {
                 webResponse = webResquest.GetResponse() as HttpWebResponse;
@@ -124,11 +208,10 @@ namespace Telephonnist
                     user.TypeCar = result.Value<int>("typeCar");
                     user.Time = result.Value<string>("time");
                     user.AddressFormated = result.Value<string>("addressFormated");
-
+             
                     jsonStream.Close();
                 }
-                tbFrom.Text = user.Address;
-                tbTo.Text = user.AddressFormated;
+                tbFrom.Text = user.AddressFormated;
                 if (user.TypeCar == 0)
                 {
                     rdbStandard.Checked = true;
@@ -139,6 +222,11 @@ namespace Telephonnist
                     rdbStandard.Checked = false;
                     rdbPremium.Checked = true;
                 }
+
+                label_his_phone.Text = user.Phone;
+                label_his_addr.Text = user.AddressFormated;
+                label_his_status.Text = user.Status.ToString();
+                label_his_type.Text = user.TypeCar.ToString();
                 btLook.Show();
                 btFind.Hide();
             }
@@ -147,17 +235,20 @@ namespace Telephonnist
                 if (Exec.Status == WebExceptionStatus.ProtocolError)
                 {
                     webResponse = (HttpWebResponse)Exec.Response;
-                    MessageBox.Show("Error code: " + webResponse.StatusCode.ToString());
+                    //MessageBox.Show("Error code: " + webResponse.StatusCode.ToString());
                     var json = JsonConvert.SerializeObject(
                         new
                         {
-                            address = user.Address,
-                            addressFormated = user.AddressFormated,
+                            phone = tbPhone.Text,
+                            address = tbFrom.Text,
+                            addressFormated = "",
                             status = 0,
                             time = user.Time,
-                            typeCar = user.TypeCar
+                            typeCar = user.TypeCar,
+                            lat = 0,
+                            lng = 0
                         });
-                    webResquest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/addcall" + user.Phone);
+                    webResquest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/addcall");
                     webResquest.Method = "PUT";
                     webResquest.ContentType = "application/json";
                     var buff = Encoding.UTF8.GetBytes(json);
@@ -166,6 +257,7 @@ namespace Telephonnist
                     try
                     {
                         webResponse = webResquest.GetResponse() as HttpWebResponse;
+                        MessageBox.Show("Đã thêm cuộc gọi");
                     }
                     catch (WebException Exec1)
                     {
@@ -188,25 +280,23 @@ namespace Telephonnist
                 if (webResponse != null)
                     webResponse.Close();
             }
+            tabControl.SelectedTab = tabHistory;
+
         }
 
         private void BtLook_Click(object sender, EventArgs e)
         {
+            tabControl.SelectedTab = tabDriver;
+            double lat = 0;
+            double lng = 0;
+            drivers = new List<Driver>();
             if (tbFrom.Text.Length < 1)
                 return;
-            var json = JsonConvert.SerializeObject(
-                new
-                {
-                    Phone = tbPhone.Text,
-                    address = tbFrom.Text
-                });
-            HttpWebRequest webRequest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/getinformationaddress/");
-            webRequest.Method = "POST";
-            webRequest.ContentType = "application/json";
-            var buff = Encoding.UTF8.GetBytes(json);
-            webRequest.ContentLength = buff.Length;
-            webRequest.GetRequestStream().Write(buff, 0, buff.Length);
+
+            HttpWebRequest webRequest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/getinformationaddress/" + tbFrom.Text);
+            webRequest.Method = "GET";
             HttpWebResponse webResponse = null;
+
             try
             {
                 webResponse = webRequest.GetResponse() as HttpWebResponse;
@@ -218,41 +308,95 @@ namespace Telephonnist
                 }
                 using (var jsonStream = new StreamReader(webResponse.GetResponseStream()))
                 {
-                    var buffReader = jsonStream.ReadToEnd();
-                    drivers = JsonConvert.DeserializeObject<Driver[]>(buffReader);
-                    DriverBoxs = new DriverBox[drivers.Length];
+                    string buffReader = jsonStream.ReadToEnd();
+                    buffReader = buffReader.Trim('\"');
+                    string[] latlng = buffReader.Split(',');
+                    lat = double.Parse(latlng[0]);
+                    lng = double.Parse(latlng[1]);
+                }
+            }
+            catch (WebException exec)
+            {
+                if (exec.Status == WebExceptionStatus.ProtocolError)
+                {
+                    webResponse = (HttpWebResponse)exec.Response;
+                    MessageBox.Show("Error code: " + webResponse.StatusCode.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Error: " + exec.Status.ToString());
+                }
+            }
+            finally
+            {
+                if (webResponse != null)
+                    webResponse.Close();
+            }
+            //find driver
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(
+            new
+            {
+                lat = lat,
+                lng = lng,
+                typeCar = 0,
+                radius = 60000
+            });
+            webRequest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/finddriver");
+            webRequest.Method = "PUT";
+            webRequest.ContentType = "application/json";
+            var buffer = Encoding.UTF8.GetBytes(json);
+            webRequest.ContentLength = buffer.Length;
+            webRequest.GetRequestStream().Write(buffer, 0, buffer.Length);
+            webResponse = null;
+            try
+            {
+                webResponse = webRequest.GetResponse() as HttpWebResponse;
+                if (webResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    if (webResponse != null)
+                        webResponse.Close();
+                    return;
+                }
+                using (var jsonStream = new StreamReader(webResponse.GetResponseStream()))
+                {
+                    var t = 0;
+                    string buffReader = jsonStream.ReadToEnd();
+                    drivers = JsonConvert.DeserializeObject<List<Driver>>(buffReader);
+                    DriverBoxs = new DriverBox[drivers.Count];
                     for (int ii = 0; ii < DriverBoxs.Length; ii++)
                     {
                         DriverBoxs[ii] = new DriverBox();
                         tabDriver.Controls.Add(DriverBoxs[ii].Box);
-                        DriverBoxs[ii].Box.Height = 60;
+                        DriverBoxs[ii].Box.Height = 115;
                         DriverBoxs[ii].Box.Width = tabDriver.Width;
-                        DriverBoxs[ii].Box.Text = "Driver" + ii.ToString();
+                        DriverBoxs[ii].Box.Text = "Driver " + ii.ToString();
+                        DriverBoxs[ii].Box.Top = t;
+                        t += 120;
 
-                        DriverBoxs[ii].Name = new Label();
                         DriverBoxs[ii].Box.Controls.Add(DriverBoxs[ii].Name);
                         DriverBoxs[ii].Name.Width = DriverBoxs[ii].Box.Width;
-                        DriverBoxs[ii].Name.Text = "Name: "+ drivers[ii].Name;
+                        DriverBoxs[ii].Name.Text = "Name: " + drivers[ii].Name;
+                        DriverBoxs[ii].Name.Top = 15;
 
-                        DriverBoxs[ii].Lat = new Label();
                         DriverBoxs[ii].Box.Controls.Add(DriverBoxs[ii].Lat);
                         DriverBoxs[ii].Lat.Width = DriverBoxs[ii].Box.Width;
                         DriverBoxs[ii].Lat.Text = "Lat: " + drivers[ii].Lat;
+                        DriverBoxs[ii].Lat.Top = 40;
 
-                        DriverBoxs[ii].Lng = new Label();
                         DriverBoxs[ii].Box.Controls.Add(DriverBoxs[ii].Lng);
                         DriverBoxs[ii].Lng.Width = DriverBoxs[ii].Box.Width;
                         DriverBoxs[ii].Lng.Text = "Lng: " + drivers[ii].Lng;
+                        DriverBoxs[ii].Lng.Top = 65;
 
-                        DriverBoxs[ii].Button = new Button();
                         DriverBoxs[ii].Box.Controls.Add(DriverBoxs[ii].Button);
                         DriverBoxs[ii].Button.Width = DriverBoxs[ii].Box.Width;
                         DriverBoxs[ii].Button.Text = "Book this car";
                         DriverBoxs[ii].Button.Left = (DriverBoxs[ii].Box.Width - DriverBoxs[ii].Button.Width) / 2 - 1;
+                        DriverBoxs[ii].Button.Top = 90;
+                        DriverBoxs[ii].Button.Name = ii.ToString();
+                        DriverBoxs[ii].Button.Click += new System.EventHandler(BtBookCar_Click);
                     }
                 }
-                btFind.Show();
-                btLook.Hide();
             }
             catch (WebException exec)
             {
@@ -275,6 +419,67 @@ namespace Telephonnist
 
         private void BtBook_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void BtBookCar_Click(object sender, EventArgs e)
+        {
+            Button btnBookCar = (Button)sender;
+            int index = int.Parse(btnBookCar.Name);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(
+            new
+            {
+                id = drivers[index].Id,
+                lat = drivers[index].Lat,
+                lng = drivers[index].Lng,
+                name = drivers[index].Name,
+                status = 1,
+                typeCar = drivers[index].TypeCard
+            });
+            HttpWebRequest webRequest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/book");
+            webRequest.Method = "PUT";
+            webRequest.ContentType = "application/json";
+            var buffer = Encoding.UTF8.GetBytes(json);
+            webRequest.ContentLength = buffer.Length;
+            webRequest.GetRequestStream().Write(buffer, 0, buffer.Length);
+            HttpWebResponse webResponse = null;
+            try
+            {
+                webResponse = webRequest.GetResponse() as HttpWebResponse;
+                if (webResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    if (webResponse != null)
+                        webResponse.Close();
+                    return;
+                }
+                else {
+                    tbDriverID.Text = drivers[index].Id.ToString();
+                    tbDriveName.Text = drivers[index].Name;
+                    for (int i = 1; i < drivers.Count; i++)
+                    { 
+                        if (i == index)
+                            continue;
+                        DriverBoxs[i].Box.Hide();
+                    }
+                }
+            }
+            catch (WebException exec)
+            {
+                if (exec.Status == WebExceptionStatus.ProtocolError)
+                {
+                    webResponse = (HttpWebResponse)exec.Response;
+                    MessageBox.Show("Error code: " + webResponse.StatusCode.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Error: " + exec.Status.ToString());
+                }
+            }
+            finally
+            {
+                if (webResponse != null)
+                    webResponse.Close();
+            }
 
         }
     }

@@ -32,19 +32,24 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabDriver = new System.Windows.Forms.TabPage();
             this.tabHistory = new System.Windows.Forms.TabPage();
+            this.label_his_type = new System.Windows.Forms.Label();
+            this.label_his_status = new System.Windows.Forms.Label();
+            this.label_his_addr = new System.Windows.Forms.Label();
+            this.label_his_phone = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.gbTelephonistDetail = new System.Windows.Forms.GroupBox();
             this.btLogout = new System.Windows.Forms.Button();
             this.lName = new System.Windows.Forms.Label();
             this.lUsername = new System.Windows.Forms.Label();
             this.gbCaller = new System.Windows.Forms.GroupBox();
-            this.tbTo = new System.Windows.Forms.TextBox();
-            this.lTo = new System.Windows.Forms.Label();
             this.btLook = new System.Windows.Forms.Button();
             this.gbType = new System.Windows.Forms.GroupBox();
             this.rdbStandard = new System.Windows.Forms.RadioButton();
             this.rdbPremium = new System.Windows.Forms.RadioButton();
             this.btFind = new System.Windows.Forms.Button();
-            this.btBook = new System.Windows.Forms.Button();
             this.tbDriveName = new System.Windows.Forms.TextBox();
             this.tbDriverID = new System.Windows.Forms.TextBox();
             this.lDriverName = new System.Windows.Forms.Label();
@@ -56,6 +61,7 @@
             this.lPhone = new System.Windows.Forms.Label();
             this.tbPhone = new System.Windows.Forms.TextBox();
             this.tabControl.SuspendLayout();
+            this.tabHistory.SuspendLayout();
             this.gbTelephonistDetail.SuspendLayout();
             this.gbCaller.SuspendLayout();
             this.gbType.SuspendLayout();
@@ -68,7 +74,7 @@
             this.gbMaps.Size = new System.Drawing.Size(637, 637);
             this.gbMaps.TabIndex = 1;
             this.gbMaps.TabStop = false;
-            this.gbMaps.Text = "Maps";
+            this.gbMaps.Text = "x";
             // 
             // tabControl
             // 
@@ -82,6 +88,7 @@
             // 
             // tabDriver
             // 
+            this.tabDriver.AutoScroll = true;
             this.tabDriver.Location = new System.Drawing.Point(4, 22);
             this.tabDriver.Name = "tabDriver";
             this.tabDriver.Padding = new System.Windows.Forms.Padding(3);
@@ -92,6 +99,14 @@
             // 
             // tabHistory
             // 
+            this.tabHistory.Controls.Add(this.label_his_type);
+            this.tabHistory.Controls.Add(this.label_his_status);
+            this.tabHistory.Controls.Add(this.label_his_addr);
+            this.tabHistory.Controls.Add(this.label_his_phone);
+            this.tabHistory.Controls.Add(this.label4);
+            this.tabHistory.Controls.Add(this.label3);
+            this.tabHistory.Controls.Add(this.label2);
+            this.tabHistory.Controls.Add(this.label1);
             this.tabHistory.Location = new System.Drawing.Point(4, 22);
             this.tabHistory.Name = "tabHistory";
             this.tabHistory.Padding = new System.Windows.Forms.Padding(3);
@@ -99,6 +114,75 @@
             this.tabHistory.TabIndex = 1;
             this.tabHistory.Text = "History";
             this.tabHistory.UseVisualStyleBackColor = true;
+            // 
+            // label_his_type
+            // 
+            this.label_his_type.AutoSize = true;
+            this.label_his_type.Location = new System.Drawing.Point(86, 85);
+            this.label_his_type.Name = "label_his_type";
+            this.label_his_type.Size = new System.Drawing.Size(0, 13);
+            this.label_his_type.TabIndex = 8;
+            // 
+            // label_his_status
+            // 
+            this.label_his_status.AutoSize = true;
+            this.label_his_status.Location = new System.Drawing.Point(86, 46);
+            this.label_his_status.Name = "label_his_status";
+            this.label_his_status.Size = new System.Drawing.Size(0, 13);
+            this.label_his_status.TabIndex = 7;
+            // 
+            // label_his_addr
+            // 
+            this.label_his_addr.AutoSize = true;
+            this.label_his_addr.Location = new System.Drawing.Point(86, 129);
+            this.label_his_addr.MaximumSize = new System.Drawing.Size(130, 0);
+            this.label_his_addr.Name = "label_his_addr";
+            this.label_his_addr.Size = new System.Drawing.Size(0, 13);
+            this.label_his_addr.TabIndex = 6;
+            // 
+            // label_his_phone
+            // 
+            this.label_his_phone.AutoSize = true;
+            this.label_his_phone.Location = new System.Drawing.Point(85, 13);
+            this.label_his_phone.Name = "label_his_phone";
+            this.label_his_phone.Size = new System.Drawing.Size(0, 13);
+            this.label_his_phone.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 85);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "TypeCar :";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 46);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(43, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Status :";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 129);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Address :";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Phone :";
             // 
             // gbTelephonistDetail
             // 
@@ -142,12 +226,9 @@
             // 
             // gbCaller
             // 
-            this.gbCaller.Controls.Add(this.tbTo);
-            this.gbCaller.Controls.Add(this.lTo);
             this.gbCaller.Controls.Add(this.btLook);
             this.gbCaller.Controls.Add(this.gbType);
             this.gbCaller.Controls.Add(this.btFind);
-            this.gbCaller.Controls.Add(this.btBook);
             this.gbCaller.Controls.Add(this.tbDriveName);
             this.gbCaller.Controls.Add(this.tbDriverID);
             this.gbCaller.Controls.Add(this.lDriverName);
@@ -165,28 +246,11 @@
             this.gbCaller.TabStop = false;
             this.gbCaller.Text = "Caller Detail";
             // 
-            // tbTo
-            // 
-            this.tbTo.Location = new System.Drawing.Point(6, 183);
-            this.tbTo.Multiline = true;
-            this.tbTo.Name = "tbTo";
-            this.tbTo.Size = new System.Drawing.Size(220, 80);
-            this.tbTo.TabIndex = 12;
-            // 
-            // lTo
-            // 
-            this.lTo.AutoSize = true;
-            this.lTo.Location = new System.Drawing.Point(6, 167);
-            this.lTo.Name = "lTo";
-            this.lTo.Size = new System.Drawing.Size(20, 13);
-            this.lTo.TabIndex = 13;
-            this.lTo.Text = "To";
-            // 
             // btLook
             // 
-            this.btLook.Location = new System.Drawing.Point(20, 345);
+            this.btLook.Location = new System.Drawing.Point(65, 300);
             this.btLook.Name = "btLook";
-            this.btLook.Size = new System.Drawing.Size(75, 23);
+            this.btLook.Size = new System.Drawing.Size(96, 45);
             this.btLook.TabIndex = 11;
             this.btLook.Text = "Look";
             this.btLook.UseVisualStyleBackColor = true;
@@ -197,7 +261,7 @@
             // 
             this.gbType.Controls.Add(this.rdbStandard);
             this.gbType.Controls.Add(this.rdbPremium);
-            this.gbType.Location = new System.Drawing.Point(6, 282);
+            this.gbType.Location = new System.Drawing.Point(6, 236);
             this.gbType.Name = "gbType";
             this.gbType.Size = new System.Drawing.Size(220, 50);
             this.gbType.TabIndex = 1;
@@ -230,34 +294,24 @@
             // 
             // btFind
             // 
-            this.btFind.Location = new System.Drawing.Point(20, 345);
+            this.btFind.Location = new System.Drawing.Point(65, 300);
             this.btFind.Name = "btFind";
-            this.btFind.Size = new System.Drawing.Size(75, 23);
+            this.btFind.Size = new System.Drawing.Size(96, 45);
             this.btFind.TabIndex = 1;
             this.btFind.Text = "Find";
             this.btFind.UseVisualStyleBackColor = true;
             this.btFind.Click += new System.EventHandler(this.BtFind_Click);
             // 
-            // btBook
-            // 
-            this.btBook.Location = new System.Drawing.Point(140, 345);
-            this.btBook.Name = "btBook";
-            this.btBook.Size = new System.Drawing.Size(75, 23);
-            this.btBook.TabIndex = 10;
-            this.btBook.Text = "Book";
-            this.btBook.UseVisualStyleBackColor = true;
-            this.btBook.Click += new System.EventHandler(this.BtBook_Click);
-            // 
             // tbDriveName
             // 
-            this.tbDriveName.Location = new System.Drawing.Point(88, 412);
+            this.tbDriveName.Location = new System.Drawing.Point(88, 396);
             this.tbDriveName.Name = "tbDriveName";
             this.tbDriveName.Size = new System.Drawing.Size(138, 20);
             this.tbDriveName.TabIndex = 1;
             // 
             // tbDriverID
             // 
-            this.tbDriverID.Location = new System.Drawing.Point(88, 385);
+            this.tbDriverID.Location = new System.Drawing.Point(88, 369);
             this.tbDriverID.Name = "tbDriverID";
             this.tbDriverID.Size = new System.Drawing.Size(138, 20);
             this.tbDriverID.TabIndex = 1;
@@ -265,7 +319,7 @@
             // lDriverName
             // 
             this.lDriverName.AutoSize = true;
-            this.lDriverName.Location = new System.Drawing.Point(6, 415);
+            this.lDriverName.Location = new System.Drawing.Point(6, 399);
             this.lDriverName.Name = "lDriverName";
             this.lDriverName.Size = new System.Drawing.Size(61, 13);
             this.lDriverName.TabIndex = 1;
@@ -274,7 +328,7 @@
             // lDriverID
             // 
             this.lDriverID.AutoSize = true;
-            this.lDriverID.Location = new System.Drawing.Point(6, 388);
+            this.lDriverID.Location = new System.Drawing.Point(6, 372);
             this.lDriverID.Name = "lDriverID";
             this.lDriverID.Size = new System.Drawing.Size(49, 13);
             this.lDriverID.TabIndex = 9;
@@ -282,7 +336,7 @@
             // 
             // tbFullName
             // 
-            this.tbFullName.Location = new System.Drawing.Point(65, 45);
+            this.tbFullName.Location = new System.Drawing.Point(65, 68);
             this.tbFullName.Name = "tbFullName";
             this.tbFullName.Size = new System.Drawing.Size(161, 20);
             this.tbFullName.TabIndex = 8;
@@ -290,7 +344,7 @@
             // 
             // tbFrom
             // 
-            this.tbFrom.Location = new System.Drawing.Point(6, 84);
+            this.tbFrom.Location = new System.Drawing.Point(6, 129);
             this.tbFrom.Multiline = true;
             this.tbFrom.Name = "tbFrom";
             this.tbFrom.Size = new System.Drawing.Size(220, 80);
@@ -299,16 +353,16 @@
             // lFrom
             // 
             this.lFrom.AutoSize = true;
-            this.lFrom.Location = new System.Drawing.Point(6, 68);
+            this.lFrom.Location = new System.Drawing.Point(6, 98);
             this.lFrom.Name = "lFrom";
-            this.lFrom.Size = new System.Drawing.Size(30, 13);
+            this.lFrom.Size = new System.Drawing.Size(45, 13);
             this.lFrom.TabIndex = 5;
-            this.lFrom.Text = "From";
+            this.lFrom.Text = "Address";
             // 
             // lCallerName
             // 
             this.lCallerName.AutoSize = true;
-            this.lCallerName.Location = new System.Drawing.Point(6, 48);
+            this.lCallerName.Location = new System.Drawing.Point(6, 68);
             this.lCallerName.Name = "lCallerName";
             this.lCallerName.Size = new System.Drawing.Size(52, 13);
             this.lCallerName.TabIndex = 2;
@@ -317,7 +371,7 @@
             // lPhone
             // 
             this.lPhone.AutoSize = true;
-            this.lPhone.Location = new System.Drawing.Point(6, 22);
+            this.lPhone.Location = new System.Drawing.Point(6, 38);
             this.lPhone.Name = "lPhone";
             this.lPhone.Size = new System.Drawing.Size(76, 13);
             this.lPhone.TabIndex = 1;
@@ -325,7 +379,7 @@
             // 
             // tbPhone
             // 
-            this.tbPhone.Location = new System.Drawing.Point(88, 19);
+            this.tbPhone.Location = new System.Drawing.Point(88, 38);
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(138, 20);
             this.tbPhone.TabIndex = 0;
@@ -348,6 +402,8 @@
             this.Text = "MainFrame";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFrame_Close);
             this.tabControl.ResumeLayout(false);
+            this.tabHistory.ResumeLayout(false);
+            this.tabHistory.PerformLayout();
             this.gbTelephonistDetail.ResumeLayout(false);
             this.gbTelephonistDetail.PerformLayout();
             this.gbCaller.ResumeLayout(false);
@@ -374,7 +430,6 @@
         private System.Windows.Forms.Button btLogout;
         private System.Windows.Forms.TextBox tbFrom;
         private System.Windows.Forms.Button btFind;
-        private System.Windows.Forms.Button btBook;
         private System.Windows.Forms.TextBox tbDriveName;
         private System.Windows.Forms.TextBox tbDriverID;
         private System.Windows.Forms.Label lDriverName;
@@ -384,8 +439,14 @@
         private System.Windows.Forms.RadioButton rdbStandard;
         private System.Windows.Forms.RadioButton rdbPremium;
         private System.Windows.Forms.Button btLook;
-        private System.Windows.Forms.TextBox tbTo;
-        private System.Windows.Forms.Label lTo;
+        private System.Windows.Forms.Label label_his_type;
+        private System.Windows.Forms.Label label_his_status;
+        private System.Windows.Forms.Label label_his_addr;
+        private System.Windows.Forms.Label label_his_phone;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 

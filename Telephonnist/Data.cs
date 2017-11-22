@@ -16,13 +16,96 @@ namespace Telephonnist
         private string time;
         private int typeCar;
 
-        public string Phone { get => phone; set => phone = value; }
-        public string Address { get => address; set => address = value; }
-        public string AddressFormated { get => addressFormated; set => addressFormated = value; }
-        public int Status { get => status; set => status = value; }
-        public string Time { get => time; set => time = value; }
-        public int TypeCar { get => typeCar; set => typeCar = value; }
-        public string Fullname { get => fullname; set => fullname = value; }
+        public string Phone
+        {
+            get
+            {
+                return phone;
+            }
+
+            set
+            {
+                phone = value;
+            }
+        }
+
+        public string Address
+        {
+            get
+            {
+                return address;
+            }
+
+            set
+            {
+                address = value;
+            }
+        }
+
+        public string AddressFormated
+        {
+            get
+            {
+                return addressFormated;
+            }
+
+            set
+            {
+                addressFormated = value;
+            }
+        }
+
+        public string Fullname
+        {
+            get
+            {
+                return fullname;
+            }
+
+            set
+            {
+                fullname = value;
+            }
+        }
+
+        public int Status
+        {
+            get
+            {
+                return status;
+            }
+
+            set
+            {
+                status = value;
+            }
+        }
+
+        public string Time
+        {
+            get
+            {
+                return time;
+            }
+
+            set
+            {
+                time = value;
+            }
+        }
+
+        public int TypeCar
+        {
+            get
+            {
+                return typeCar;
+            }
+
+            set
+            {
+                typeCar = value;
+            }
+        }
     }
 
     class History
@@ -32,15 +115,88 @@ namespace Telephonnist
     class Driver
     {
         private string name;
-        private string lat;
-        private string lng;
+        private double lat;
+        private double lng;
         private int status;
         private int typeCard;
+        private int id;
 
-        public string Name { get => name; set => name = value; }
-        public int Status { get => status; set => status = value; }
-        public int TypeCard { get => typeCard; set => typeCard = value; }
-        public string Lat { get => lat; set => lat = value; }
-        public string Lng { get => lng; set => lng = value; }
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
+        public double Lat
+        {
+            get
+            {
+                return lat;
+            }
+
+            set
+            {
+                lat = value;
+            }
+        }
+
+        public double Lng
+        {
+            get
+            {
+                return lng;
+            }
+
+            set
+            {
+                lng = value;
+            }
+        }
+
+        public int Status
+        {
+            get
+            {
+                return status;
+            }
+
+            set
+            {
+                status = value;
+            }
+        }
+
+        public int TypeCard
+        {
+            get
+            {
+                return typeCard;
+            }
+
+            set
+            {
+                typeCard = value;
+            }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = value;
+            }
+        }
     }
 }

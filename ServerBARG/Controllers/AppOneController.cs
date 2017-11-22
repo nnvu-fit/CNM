@@ -50,7 +50,6 @@ namespace ServerBARG.Controllers
             JObject json;
             HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/call/" + phone + ".json");
             request.Method = "Get";
-            request.ContentType = "application/json : ";
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
             using (Stream responsestream = response.GetResponseStream())
             {
@@ -71,11 +70,9 @@ namespace ServerBARG.Controllers
             JObject json;
             string lat = "";
             string lng = "";
-            string URL = "https://barg-9f201.firebaseio.com/call.json?orderBy=\"addressFormated\"&equalTo=" + "\"" + address + "\"";
+                string URL = "https://barg-9f201.firebaseio.com/call.json?orderBy=\"addressFormated\"&equalTo=" + "\"" + address + "\"";
             HttpWebRequest request = WebRequest.CreateHttp(URL);
-            //HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/call.json?orderBy=\"status\"&equalTo=0");
             request.Method = "Get";
-            request.ContentType = "application/json : ";
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
             using (Stream responsestream = response.GetResponseStream())
             {
@@ -88,7 +85,7 @@ namespace ServerBARG.Controllers
 
             foreach (var a in json)
             {
-                if(json[a.Key]["status"].ToString() == "2")
+                if(json[a.Key]["status"].ToString() != "0")
                 {
                     lat = json[a.Key]["lat"].ToString();
                     lng = json[a.Key]["lng"].ToString();
@@ -144,7 +141,7 @@ namespace ServerBARG.Controllers
                     new Coordinates(tem.Lat, tem.Lng),
                     UnitOfLength.Kilometers 
                 );
-                if(distance <= (find.Radius) / 1000)
+                if(distance <= (find.Radius) / 1000 && tem.Status == 0)
                 {
                     var json = JsonConvert.SerializeObject(tem, Formatting.Indented);
                     JObject jobject = JObject.Parse(json);
@@ -157,7 +154,7 @@ namespace ServerBARG.Controllers
 
         #region  Đặt xe
         [HttpPut]
-        [Route("api/managerappone/book/")]
+        [Route("api/managerappone/book")]
         public HttpResponseMessage BookCar([FromBody]Car car)
         {
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(

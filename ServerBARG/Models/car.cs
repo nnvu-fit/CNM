@@ -11,6 +11,9 @@ namespace ServerBARG.Models
         double lat;
         double lng;
         string name;
+        //status
+        //    0 : xe trống 
+        //    1 : xe đang có khách
         int status;
         int typeCar;
 
