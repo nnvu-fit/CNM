@@ -113,10 +113,10 @@ function getDriverList() {
   fetch('http://localhost:56081/api/managerappone/finddriver', {
     method: 'put',
     body: {
-      lat: 10.7918069,
-      lng: 106.6988929,
-      typeCar: 0,
-      radius: 30000
+      "lat": 10.7918069,
+      "lng": 106.6988929,
+      "typeCar": 0,
+      "radius": 50000
     }
   })
   // if (DriverBarg) {} else {
