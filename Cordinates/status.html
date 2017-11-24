@@ -11,7 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <!-- Custom styles for this template -->
-    <link href="assets\css\cordinates.css" rel="stylesheet" type="text/css">
+    <link href="assets\css\status.css" rel="stylesheet" type="text/css">
   </head>
 
   <body style="height: 100%; margin: 0; padding: 0;">
@@ -24,11 +24,11 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">App2 <span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
-              <a class="nav-link" href="status.html">App3</a>
+              <a class="nav-link" href="cordinates.html">App2</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">App3 <span class="sr-only">(current)</span></a>
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">
@@ -53,7 +53,7 @@
                   {{#each this}}
                     <div class="btn-group" role="group" aria-label="Basic example" style="width: 100%; margin-top: 5px; margin-bottom: 5px;">
                       <button type="button" class="btn btn-primary mark" style="width: 70%;" data-id={{@key}}>{{@key}}</button>
-                      <button type="button" class="btn btn-secondary update" style="width: 30%;" data-id={{@key}}>Update</button>
+                      <button type="button" class="btn btn-secondary detail" style="width: 30%;" data-id={{@key}}>Detail</button>
                     </div>
                   {{/each}}
                 </div>
@@ -68,6 +68,8 @@
       </div>
     </div>
 
+    <div class="popup" onclick="HidePopup()"></div>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -77,6 +79,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiSNgJgVxGRKJUBRUFEC2CDwaEgs3cgaM" async defer></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 
-    <script type="text/javascript" src="assets\js\cordinates.js"></script>
+    <script type="text/javascript" src="assets\js\status.js"></script>
   </body>
 </html>
