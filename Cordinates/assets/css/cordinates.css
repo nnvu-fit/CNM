@@ -1,0 +1,19 @@
+
+.scrollbar {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.scrollbar::-moz-scrollbar {
+  width: 1px;
+  background-color:white;
+}
+.scrollbar::-moz-scrollbar-thumb {
+  background-color:white;
+}
+.scrollbar::-moz-scrollbar-track {
+  background-color:white;
+}

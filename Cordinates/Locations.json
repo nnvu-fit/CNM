@@ -1,0 +1,23 @@
+{
+  "000000000" : {
+    "address" : "101 Dương Bá Trạc, Phường 1, Quận 8",
+    "addressFormated" : "101 Dương Bá Trạc, Phường 1, Quận 8",
+    "lat" : 11.7346776674577,
+    "lng" : 106.617092211527,
+    "status" : 1
+  },
+  "111111111" : {
+    "address" : "101 Dương Bá Trạc, Phường 1, Quận 8",
+    "addressFormated" : "101 Dương Bá Trạc, Phường 1, Quận 8",
+    "lat" : 10.7346776674577,
+    "lng" : 106.617092211527,
+    "status" : 1
+  },
+  "222222222" : {
+    "address" : "102 Dương Bá Trạc, Phường 1, Quận 8",
+    "addressFormated" : "102 Dương Bá Trạc, Phường 1, Quận 8",
+    "lat" : 0,
+    "lng" : 0,
+    "status" : 0
+  }
+}
