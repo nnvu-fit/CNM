@@ -43,9 +43,11 @@
       <div class="row">
         <nav class="col-sm-3 col-md-3 d-none d-sm-block bg-light sidebar" id="SideBar" style="margin-top: 15px;">
           <div class="scrollbar">
-            <button type="button" class="btn btn-primary" onclick="getLocationList()" id="GetAllLocations" style="width: 100%; margin-left: 0; margin-right: 0;">
-              Get List of Location
-            </button>
+            <div class="Button-control-list">
+              <button type="button" class="btn btn-primary" onclick="getLocationList()" id="GetAllLocations" style="width: 100%; margin-left: 0; margin-right: 0;">
+                Get List of Location
+              </button>
+            </div>
 
             <div id="Location-List" style="height: auto; visibility: hidden;">
               <script id="Location-template" type="text/x-handlebars-template">
@@ -59,6 +61,20 @@
                 </div>
               </script>
             </div>
+
+            <div id="Driver-List" style="height: auto; visibility: hidden;">
+              <script id="Drivers-template" type="text/x-handlebars-template">
+                <div class="Drivers-detail" style="margin: 15px;">
+                  {{#each this}}
+                    <div class="btn-group" role="group" aria-label="Basic example" style="width: 100%; margin-top: 5px; margin-bottom: 5px;">
+                      <button type="button" class="btn btn-primary mark" style="width: 30%;" data-id={{@key}}>{{name}}</button>
+                      <button type="button" class="btn btn-secondary update" style="width: 70%;" data-id={{@key}}>Book this car</button>
+                    </div>
+                  {{/each}}
+                </div>
+              </script>
+            </div>
+
           </div>
         </nav>
 

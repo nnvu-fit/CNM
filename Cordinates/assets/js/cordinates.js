@@ -19,61 +19,153 @@ var currentMarker;
 var currentInfo;
 var currentID;
 
+var DriverList = [];
+var DriverMarkers = [];
+var DriverInfos = [];
+var currentDriver;
+var currentDriverMarker;
+var currentDriverInfo;
+var currentDriverID;
+
+var DriverBarg;
+var CallBarg;
+
 function getLocationList() {
   // $('#GetAllLocations').last().remove();
-  document.getElementById('Location-List').style.visibility  = 'visible';
-  firebase.initializeApp(config)
-  firebase.database().ref('call/').on('value', function(snaps) {
-    $('.Location-detail').last().remove();
+  if (CallBarg) {
+    document.getElementById('Location-List').style.visibility  = 'visible';
+    document.getElementById('Driver-List').style.visibility  = 'hidden';
+    var ButtonControl = $('.Button-control-list')[0];
+    ButtonControl.innerHTML = '<button type="button" class="btn btn-primary" onclick="getDriverList()" id="GetAllDrivers" style="width: 100%; margin-left: 0; margin-right: 0;">\
+                                Show driver list\
+                               </button>';
+  } else {
+    document.getElementById('Location-List').style.visibility  = 'visible';
+    firebase.initializeApp(config)
+    CallBarg = firebase.database().ref('call/');
+    CallBarg.on('value', function(snaps) {
+      $('.Location-detail').last().remove();
 
-    Object.keys(Markers).forEach(function(val) { Markers[val].setMap(null); });
-    Object.keys(MarkerInfos).forEach(function(val) { MarkerInfos[val].close(); });
+      Object.keys(Markers).forEach(function(val) { Markers[val].setMap(null); });
+      Object.keys(MarkerInfos).forEach(function(val) { MarkerInfos[val].close(); });
 
-    LocationsList = [];
-    Markers = [];
-    MarkerInfos = [];
+      LocationsList = [];
+      Markers = [];
+      MarkerInfos = [];
 
-    LocationsList = JSON.parse(JSON.stringify(snaps.val()));
+      LocationsList = JSON.parse(JSON.stringify(snaps.val()));
 
-    if (currentID) {
-      LocationsList[currentID] = currentLocation;
-      Markers[currentID] = currentMarker;
-      MarkerInfos[currentID] = currentInfo;
-    }
-
-    Object.keys(LocationsList).forEach(function(val) {
-      if (LocationsList[val].status == 0) {} else {
-        pos = {lat: LocationsList[val].lat, lng: LocationsList[val].lng};
-        Markers[val] = new google.maps.Marker({
-          position: pos,
-          title: val,
-          map: map
-        });
-        MarkerInfos[val] = new google.maps.InfoWindow({
-          content: 'ID: ' + val + '<br/>' + 'address: ' + LocationsList[val].addressFormated
-        });
-        Markers[val].addListener('click', function() {
-          Object.keys(MarkerInfos).forEach(function(value1) {
-            MarkerInfos[value1].close();
-          });
-          MarkerInfos[val].open(map, Markers[val]);
-        });
-      };
-    });
-    var source = $("#Location-template").html();
-    var template = Handlebars.compile(source);
-    var html = template(LocationsList);
-    $('#Location-List').append(html);
-
-    $.each($('.btn.btn-secondary.update'), function(key, val) {
-      if (LocationsList[val.dataset.id].status != 0)
-      {
-        val.classList.remove('btn-secondary');
-        val.classList.add('btn-success');
+      if (currentID) {
+        LocationsList[currentID] = currentLocation;
+        Markers[currentID] = currentMarker;
+        MarkerInfos[currentID] = currentInfo;
       }
-    });
 
-  });
+      Object.keys(LocationsList).forEach(function(val) {
+        if (LocationsList[val].status == 0) {} else {
+          pos = {lat: LocationsList[val].lat, lng: LocationsList[val].lng};
+          Markers[val] = new google.maps.Marker({
+            position: pos,
+            title: val,
+            map: map
+          });
+          MarkerInfos[val] = new google.maps.InfoWindow({
+            content: 'ID: ' + val + '<br/>' + 'address: ' + LocationsList[val].addressFormated +
+                     '<br/><button type="button" class="btn btn-primary mark" data-id="' + val + '">Book this Car</button>'
+          });
+          Markers[val].addListener('click', function() {
+            Object.keys(MarkerInfos).forEach(function(value1) {
+              MarkerInfos[value1].close();
+            });
+            MarkerInfos[val].open(map, Markers[val]);
+          });
+        };
+      });
+      var source = $("#Location-template").html();
+      var template = Handlebars.compile(source);
+      var html = template(LocationsList);
+      $('#Location-List').append(html);
+
+      $.each($('.btn.btn-secondary.update'), function(key, val) {
+        if (LocationsList[val.dataset.id].status != 0)
+        {
+          val.classList.remove('btn-secondary');
+          val.classList.add('btn-success');
+        }
+      });
+
+    });
+    var ButtonControl = $('.Button-control-list')[0];
+    ButtonControl.innerHTML = '<button type="button" class="btn btn-primary" onclick="getDriverList()" id="GetAllDrivers" style="width: 100%; margin-left: 0; margin-right: 0;">\
+                                Show driver list\
+                               </button>';
+  }
+}
+
+function getDriverList() {
+  document.getElementById('Driver-List').style.visibility  = 'visible';
+  document.getElementById('Location-List').style.visibility  = 'hidden';
+  var ButtonControl = $('.Button-control-list')[0];
+  ButtonControl.innerHTML = '<button type="button" class="btn btn-primary" onclick="getLocationList()" id="GetAllDrivers" style="width: 100%; margin-left: 0; margin-right: 0;">\
+                              Show Call list\
+                             </button>';
+
+  fetch('http://localhost:56081/api/managerappone/finddriver', {
+    method: 'put',
+    body: {
+      lat: 10.7918069,
+      lng: 106.6988929,
+      typeCar: 0,
+      radius: 30000
+    }
+  })
+  // if (DriverBarg) {} else {
+  //   DriverBarg = firebase.database().ref('driver/');
+  //   DriverBarg.on('value', function(snaps) {
+  //     $('.Drivers-detail').last().remove();
+  //
+  //     Object.keys(DriverMarkers).forEach(function(val) { DriverMarkers[val].setMap(null); });
+  //     Object.keys(DriverInfos).forEach(function(val) { DriverInfos[val].close(); });
+  //
+  //     DriverInfos = [];
+  //     DriverMarkers = [];
+  //     DriverList = JSON.parse(JSON.stringify(snaps.val()));
+  //
+  //     if (currentDriverID) {
+  //       DriverList[currentDriverID] = currentDriver;
+  //       DriverMarkers[currentDriverID] = currentDriverMarker;
+  //       DriverInfos[currentID] = currentDriverInfo;
+  //     }
+  //
+  //     Object.keys(LocationsList).forEach(function(val) {
+  //       if (LocationsList[val].status == 0) {} else {
+  //         pos = {lat: LocationsList[val].lat, lng: LocationsList[val].lng};
+  //         Markers[val] = new google.maps.Marker({
+  //           position: pos,
+  //           title: val,
+  //           map: map
+  //         });
+  //         MarkerInfos[val] = new google.maps.InfoWindow({
+  //           content: 'ID: ' + val + '<br/>' + 'address: ' + LocationsList[val].addressFormated +
+  //                    '<br/><button type="button" class="btn btn-primary mark" data-id="' + val + '">Book this Car</button>'
+  //         });
+  //         Markers[val].addListener('click', function() {
+  //           Object.keys(MarkerInfos).forEach(function(value1) {
+  //             MarkerInfos[value1].close();
+  //           });
+  //           MarkerInfos[val].open(map, Markers[val]);
+  //         });
+  //       };
+  //     });
+  //
+  //     var source = $("#Drivers-template").html();
+  //     var template = Handlebars.compile(source);
+  //     var html = template(LocationsList);
+  //     $('#Driver-List').append(html);
+  //
+  //     console.log(DriverList);
+  //   });
+  // }
 }
 
 $('#Location-List').on('click', '.mark', function() {
