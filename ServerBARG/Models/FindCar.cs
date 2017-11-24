@@ -7,12 +7,12 @@ namespace ServerBARG.Models
 {
     public class FindCar
     {
-        long lat;
-        long lng;
+        double lat;
+        double lng;
         int typeCar;
         int radius;
 
-        public long Lat
+        public double Lat
         {
             get
             {
@@ -25,7 +25,7 @@ namespace ServerBARG.Models
             }
         }
 
-        public long Lng
+        public double Lng
         {
             get
             {

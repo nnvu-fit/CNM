@@ -110,14 +110,40 @@ function getDriverList() {
                               Show Call list\
                              </button>';
 
-  fetch('http://localhost:56081/api/managerappone/finddriver', {
-    method: 'put',
-    body: {
-      "lat": 10.7918069,
-      "lng": 106.6988929,
-      "typeCar": 0,
-      "radius": 50000
-    }
+  // fetch('http://localhost:56081/api/managerappone/finddriver', {
+  //   method: 'put',
+  //   body: {
+  //     "lat": 10.7918069,
+  //     "lng": 106.6988929,
+  //     "typeCar": 0,
+  //     "radius": 50000
+  //   }
+  // })
+var jsonObject = {
+        lat: 10.7918069,
+        lng: 106.6988929,
+        typeCar: 0,
+        radius: 50000
+    };
+
+var places = 8,
+    json = JSON.stringify(jsonObject, function(key, value) {
+        // limit precision of floats
+        if (typeof value === 'number') {
+            return parseFloat(value.toFixed(places));
+        }
+        return value;
+    });
+    console.log(json);
+  fetch('http://localhost:56081/api/managerappone/finddriver',
+  {
+
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "PUT",
+      body: json
   })
   // if (DriverBarg) {} else {
   //   DriverBarg = firebase.database().ref('driver/');
