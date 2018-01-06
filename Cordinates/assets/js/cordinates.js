@@ -45,6 +45,7 @@ function getLocationList() {
     CallBarg = firebase.database().ref('call/');
     CallBarg.on('value', function(snaps) {
       $('.Location-detail').last().remove();
+      $('.Driver-List').last().remove();
 
       Object.keys(Markers).forEach(function(val) { Markers[val].setMap(null); });
       Object.keys(MarkerInfos).forEach(function(val) { MarkerInfos[val].close(); });
@@ -120,8 +121,8 @@ function getDriverList() {
   //   }
   // })
 var jsonObject = {
-        lat: 10.7918069,
-        lng: 106.6988929,
+        lat: 10.724199032203845,
+        lng: 106.75121212188608,
         typeCar: 0,
         radius: 50000
     };
@@ -144,7 +145,35 @@ var places = 8,
       },
       method: "PUT",
       body: json
-  })
+  }).then(function(response){
+    if (response.status == 200)
+      response.json().then(function(data){
+          $('.Location-detail').last().remove();
+          $('.Driver-List').last().remove();
+
+          Object.keys(Markers).forEach(function(val) { Markers[val].setMap(null); });
+          Object.keys(MarkerInfos).forEach(function(val) { MarkerInfos[val].close(); });
+          Markers = [];
+          MarkerInfos = [];
+
+          Object.keys(DriverMarkers).forEach(function(val) { DriverMarkers[val].setMap(null); });
+          Object.keys(DriverInfos).forEach(function(val) { DriverInfos[val].close(); });
+          DriverInfos = [];
+          DriverList = [];
+          DriverMarkers = [];
+
+          DriverList = JSON.parse(JSON.stringify(data));
+          console.log(DriverList);
+
+          var source = $("#Drivers-template").html();
+          var template = Handlebars.compile(source);
+          var html = template(DriverList);
+          $('#Driver-List').append(html);
+
+
+      });
+  });
+
   // if (DriverBarg) {} else {
   //   DriverBarg = firebase.database().ref('driver/');
   //   DriverBarg.on('value', function(snaps) {
