@@ -11,6 +11,7 @@ namespace ServerBARG.Models
         double lat;
         double lng;
         string name;
+        string username;
         string pass;
         //status
         //    0 : xe trống 
@@ -106,6 +107,19 @@ namespace ServerBARG.Models
             set
             {
                 typeCar = value;
+            }
+        }
+
+        public string Username
+        {
+            get
+            {
+                return username;
+            }
+
+            set
+            {
+                username = value;
             }
         }
     }

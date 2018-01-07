@@ -179,6 +179,7 @@ namespace ServerBARG.Controllers
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(
                 new
                 {
+                    username = infodriver.Username,
                     id = infodriver.Id,
                     name = infodriver.Name,
                     typeCar = infodriver.TypeCar,
@@ -206,6 +207,7 @@ namespace ServerBARG.Controllers
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(
                 new
                 {
+                    username = car.Username,
                     name = car.Name,
                     typeCar = car.TypeCar,
                     status = 0,
@@ -252,7 +254,8 @@ namespace ServerBARG.Controllers
                    status = car.Status,
                    lat = car.Lat,
                    lng = car.Lng,
-                   pass = car.Pass
+                   pass = car.Pass,
+                   username = car.Username
                });
                 request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + car.Id + ".json");
                 request.Method = "PUT";
