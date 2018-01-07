@@ -121,7 +121,7 @@ namespace ServerBARG.Controllers
                 var Read = new StreamReader(responsestream).ReadToEnd();
                 if (Read == "null")
                     return Request.CreateResponse(HttpStatusCode.NotFound);
-                JArray listcar = findCar(Read, find);
+                JArray listcar = findCarRadius(Read, find);
                 if (listcar == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -130,10 +130,17 @@ namespace ServerBARG.Controllers
             }
         }
 
-        private JArray findCar(string listcar, FindCar find)
+        private JArray findCarRadius(string listcar, FindCar find)
         {
             JArray array = new JArray();
-            List<Car> list = JsonConvert.DeserializeObject<List<Car>>(listcar);
+            List<Car> list = new List<Car>();
+            JObject js_listcar = JObject.Parse(listcar);
+            foreach (var a in js_listcar)
+            {
+               Car car = JsonConvert.DeserializeObject<Car>(a.Value.ToString());
+                car.Id = a.Key.ToString();
+                list.Add(car);
+            }
             foreach (Car tem in list)
             {
                 var distance = new Coordinates(find.Lat, find.Lng)
@@ -154,27 +161,133 @@ namespace ServerBARG.Controllers
 
         #region  Đặt xe
         [HttpPut]
-        [Route("api/managerappone/book")]
-        public HttpResponseMessage BookCar([FromBody]Car car)
+        [Route("api/managerappone/book/{idcar}")]
+        public HttpResponseMessage BookCar(string idcar)
+        {
+            JObject js_infodriver;
+            HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + idcar+ ".json");
+            request.Method = "Get";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responsestream = response.GetResponseStream())
+            {
+                var Read = new StreamReader(responsestream).ReadToEnd();
+                if (Read == "null")
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                js_infodriver = JObject.Parse(Read);
+            }
+            Car infodriver = JsonConvert.DeserializeObject<Car>(js_infodriver.ToString());
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(
+                new
+                {
+                    id = infodriver.Id,
+                    name = infodriver.Name,
+                    typeCar = infodriver.TypeCar,
+                    status = 1,
+                    lat = infodriver.Lat,
+                    lng = infodriver.Lng,
+                    pass = infodriver.Pass
+                });
+            request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + idcar + ".json");
+            request.Method = "PUT";
+            request.ContentType = "application/json";
+            var buffer = Encoding.UTF8.GetBytes(json);
+            request.ContentLength = buffer.Length;
+            request.GetRequestStream().Write(buffer, 0, buffer.Length);
+            response = request.GetResponse() as HttpWebResponse;
+            return Request.CreateResponse(response.StatusCode);
+        }
+        #endregion
+
+        #region  Đăng ký xe
+        [HttpPost]
+        [Route("api/managerappdriver/register")]
+        public HttpResponseMessage RegisterDriver ([FromBody]Car car)
         {
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(
                 new
                 {
-                    id = car.Id,
                     name = car.Name,
                     typeCar = car.TypeCar,
-                    status = car.Status,
+                    status = 0,
                     lat = car.Lat,
-                    lng = car.Lng
+                    lng = car.Lng,
+                    pass = car.Pass
                 });
-            HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + car.Id + ".json");
-            request.Method = "PUT";
+            HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver.json");
+            request.Method = "POST";
             request.ContentType = "application/json";
             var buffer = Encoding.UTF8.GetBytes(json);
             request.ContentLength = buffer.Length;
             request.GetRequestStream().Write(buffer, 0, buffer.Length);
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
             return Request.CreateResponse(response.StatusCode);
+        }
+        #endregion
+
+        #region  Thay đổi thông tin xe
+        [HttpPut]
+        [Route("api/managerappone/updatestatus")]
+        public HttpResponseMessage UpdateStatus(Car car)
+        {
+            JObject js_infodriver;
+            HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + car.Id + ".json");
+            request.Method = "Get";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responsestream = response.GetResponseStream())
+            {
+                var Read = new StreamReader(responsestream).ReadToEnd();
+                if (Read == "null")
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                js_infodriver = JObject.Parse(Read);
+            }
+            Car infodriver = JsonConvert.DeserializeObject<Car>(js_infodriver.ToString());
+            if(car.Pass == infodriver.Pass)
+            {
+               var json = Newtonsoft.Json.JsonConvert.SerializeObject(
+               new
+               {
+                   id = car.Id,
+                   name = car.Name,
+                   typeCar = car.TypeCar,
+                   status = car.Status,
+                   lat = car.Lat,
+                   lng = car.Lng,
+                   pass = car.Pass
+               });
+                request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + car.Id + ".json");
+                request.Method = "PUT";
+                request.ContentType = "application/json";
+                var buffer = Encoding.UTF8.GetBytes(json);
+                request.ContentLength = buffer.Length;
+                request.GetRequestStream().Write(buffer, 0, buffer.Length);
+                response = request.GetResponse() as HttpWebResponse;
+                return Request.CreateResponse(response.StatusCode);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+            }
+           
+        }
+        #endregion
+
+        #region  Kiểm tra thông tin xe
+        [HttpGet]
+        [Route("api/managerappdriver/checkinfo/{idcar}")]
+        public HttpResponseMessage CheckInfo(string idCar)
+        {
+            JObject js_infodriver;
+            HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + idCar + ".json");
+            request.Method = "Get";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responsestream = response.GetResponseStream())
+            {
+                var Read = new StreamReader(responsestream).ReadToEnd();
+                if (Read == "null")
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                js_infodriver = JObject.Parse(Read);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, js_infodriver);
         }
         #endregion
 

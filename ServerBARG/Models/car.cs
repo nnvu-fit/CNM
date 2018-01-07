@@ -7,17 +7,18 @@ namespace ServerBARG.Models
 {
     public class Car
     {
-        int id;
+        string id;
         double lat;
         double lng;
         string name;
+        string pass;
         //status
         //    0 : xe trống 
         //    1 : xe đang có khách
         int status;
         int typeCar;
 
-        public int Id
+        public string Id
         {
             get
             {
@@ -66,6 +67,19 @@ namespace ServerBARG.Models
             set
             {
                 name = value;
+            }
+        }
+
+        public string Pass
+        {
+            get
+            {
+                return pass;
+            }
+
+            set
+            {
+                pass = value;
             }
         }
 
