@@ -225,8 +225,29 @@ namespace Telephonnist
 
                 label_his_phone.Text = user.Phone;
                 label_his_addr.Text = user.AddressFormated;
-                label_his_status.Text = user.Status.ToString();
-                label_his_type.Text = user.TypeCar.ToString();
+                //        0 : 
+                //    1 : đang tìm xe
+                //    2 : đã định vị
+                //    3 : 
+                switch (user.Status)
+                {
+                    case 0:
+                        label_his_status.Text = "chưa xac định tọa độ";
+                        break;
+                    case 1:
+                        label_his_status.Text = "đang tìm xe";
+                        break;
+                    case 2:
+                        label_his_status.Text = "đã định vị";
+                        break;
+                    case 3:
+                        label_his_status.Text = "không có xe";
+                        break;
+                }
+                if (user.TypeCar == 0)
+                    label_his_type.Text = "xe thường";
+                else
+                    label_his_type.Text = "xe vip";
                 btLook.Show();
                 btFind.Hide();
             }
@@ -436,7 +457,8 @@ namespace Telephonnist
                 status = 1,
                 typeCar = drivers[index].TypeCard
             });
-            HttpWebRequest webRequest = WebRequest.CreateHttp("http://localhost:56081/api/managerappone/book");
+            string url = "http://localhost:56081/api/managerappone/book/" + drivers[index].Id.ToString();
+            HttpWebRequest webRequest = WebRequest.CreateHttp(url);
             webRequest.Method = "PUT";
             webRequest.ContentType = "application/json";
             var buffer = Encoding.UTF8.GetBytes(json);

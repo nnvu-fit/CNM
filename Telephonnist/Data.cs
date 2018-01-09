@@ -119,7 +119,9 @@ namespace Telephonnist
         private double lng;
         private int status;
         private int typeCard;
-        private int id;
+        private string id;
+        private string username;
+        private string pass;
 
         public string Name
         {
@@ -186,7 +188,7 @@ namespace Telephonnist
             }
         }
 
-        public int Id
+        public string Id
         {
             get
             {
