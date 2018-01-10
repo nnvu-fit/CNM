@@ -1,23 +1,36 @@
 import * as React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
-        return <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a className="navbar-brand" href="#">Final</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#topbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="topbar">
-                <div className="my-2 my-lg-0 ml-auto">
-                    <form className="form-inline">
-                        <input type="text" className="form-control mx-sm-3" id="login-username" placeholder="username"></input>
-                        <input type="password" className="form-control mx-sm-3" id="login-password" placeholder="password"></input>
-                        <button type="submit" className="btn btn-primary">Sign in</button>
-                    </form>
+        return <div className='main-nav'>
+                <div className='navbar navbar-inverse'>
+                <div className='navbar-header'>
+                    <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+                        <span className='sr-only'>Toggle navigation</span>
+                        <span className='icon-bar'></span>
+                        <span className='icon-bar'></span>
+                        <span className='icon-bar'></span>
+                    </button>
+                    <Link className='navbar-brand' to={ '/' }>Final</Link>
+                </div>
+                <div className='clearfix'></div>
+                <div className='navbar-collapse collapse'>
+                    <ul className='nav navbar-nav row'>
+                        <li>
+                            <NavLink exact to="/login" activeClassName='active'>
+                                Login
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink exact to="/register" activeClassName='active'>
+                                Register
+                            </NavLink>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </nav>
-        ;
+        </div>;
     }
 }
+
