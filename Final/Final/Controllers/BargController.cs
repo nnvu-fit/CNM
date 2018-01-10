@@ -274,7 +274,7 @@ namespace Final.Controllers
 
         #region Kiem tra thong tin xe
         [HttpGet("checkinfo/{idcar}", Name = "CheckInfo")]
-        public Newtonsoft.Json.Linq.JObject CheckInfo(string idcard)
+        public Newtonsoft.Json.Linq.JObject CheckInfo(string idCar)
         {
             Newtonsoft.Json.Linq.JObject js_infodriver;
             HttpWebRequest request = WebRequest.CreateHttp("https://barg-9f201.firebaseio.com/driver/" + idCar + ".json");
@@ -290,9 +290,10 @@ namespace Final.Controllers
             return js_infodriver;
         }
 
-        #endregion    }
+        #endregion
+    }
 
-        public class Coordinates
+    public class Coordinates
     {
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }

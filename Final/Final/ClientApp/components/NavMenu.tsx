@@ -3,34 +3,27 @@ import { NavLink, Link } from 'react-router-dom';
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
-        return <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
-                <div className='navbar-header'>
-                    <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                        <span className='sr-only'>Toggle navigation</span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                    </button>
-                    <Link className='navbar-brand' to={ '/' }>Final</Link>
-                </div>
-                <div className='clearfix'></div>
-                <div className='navbar-collapse collapse'>
-                    <ul className='nav navbar-nav row'>
-                        <li>
-                            <NavLink exact to="/login" activeClassName='active'>
-                                Login
+        return <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
+
+                <a className='navbar-brand' href='/'>Final</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className='collapse navbar-collapse' id="navbarsExampleDefault">
+                    <ul className='navbar-nav col-sm-2 ml-auto row'>
+                        <li className="nav-item">
+                            <NavLink className="btn btn-primary" exact to="/login" activeClassName='active'>
+                                    Login
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink exact to="/register" activeClassName='active'>
-                                Register
+                        <li className="nav-item">
+                            <NavLink className="btn btn-outline-secondary" exact to="/register" activeClassName='active'>
+                                    Register
                             </NavLink>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </div>;
+        </nav>;
     }
 }
 

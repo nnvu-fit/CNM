@@ -26,21 +26,24 @@ class Login extends React.Component<UserProps, UserLoginData> {
 
     public render() {
         return <div className="row">
-            <br /> <br /> <br />
-            <h1>Login</h1>
-            <div className="col-sm-6 col-md-6">
-                <div className="form-group">
-                    <label htmlFor="login-username">Username</label>
-                    <input type="text" className="form-control" id="login-username" value={this.state.username} onChange={(e) => { this.handleUsernameChange(e) }} placeholder="Username">
-                    </input>
+            <div className='col-sm-3'>
+            </div>
+            <div className='col-sm-9'>
+                <h1>Login</h1>
+                <div className="col-sm-6 col-md-6">
+                    <div className="form-group">
+                        <label htmlFor="login-username">Username</label>
+                        <input type="text" className="form-control" id="login-username" value={this.state.username} onChange={(e) => { this.handleUsernameChange(e) }} placeholder="Username">
+                        </input>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="login-password">Password</label>
+                        <input type="password" className="form-control" id="login-password" value={this.state.password} onChange={(e) => { this.handlePasswordChange(e) }} placeholder="Password"></input>
+                    </div>
+                    <button className="btn btn-primary" type="button" onClick={() => { this.handleLoginClick() }}>
+                        Login
+                    </button>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="login-password">Username</label>
-                    <input type="password" className="form-control" id="login-password" value={this.state.password} onChange={(e) => { this.handlePasswordChange(e) }} placeholder="Password"></input>
-                </div>
-                <button className="btn btn-primary" type="button" onClick={() => { this.handleLoginClick() }}>
-                    Login
-                </button>
             </div>
         </div>;
     }
@@ -55,6 +58,7 @@ class Login extends React.Component<UserProps, UserLoginData> {
 
     handleLoginClick() {
         var ID;
+        var ws;
         fetch('/api/Login', {
             method: 'POST',
             headers: new Headers(),
@@ -64,12 +68,17 @@ class Login extends React.Component<UserProps, UserLoginData> {
             }
         }).then(function (data) { return data.json(); })
             .then(function (data) {
-                if (data.logined == 1)
+                if (data.logined == 1) {
                     ID = data.ID;
-                else ID = null;
+                    ws = data.WorkSpace;
+                }
+                else {
+                    ID = null;
+                    ws = null;
+                }
             });
-        if (ID)
-            this.props.SetID(ID);
+        if (ID && ws)
+            this.props.SetID(ID, ws);
     }
 }
 

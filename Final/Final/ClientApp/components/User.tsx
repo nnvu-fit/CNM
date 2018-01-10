@@ -18,7 +18,7 @@ class User extends React.Component<UserProps, {}> {
 
             <h3>User ID: <strong>{this.props.UserID}</strong></h3>
 
-            <button onClick={() => { this.props.SetID("123") }}>Set ID by 123</button>
+            <button onClick={() => { this.props.SetID("123", "") }}>Set ID by 123</button>
 
             <button onClick={() => { this.props.RemoveID() }}>Remove ID</button>
         </div>;
