@@ -59,19 +59,6 @@ class Cordinates extends React.Component<UserProps, {}> {
                         </button>
                     </div>
                 </div>
-                <div id="Location-List">
-                    <script id="Location-template" type="text/x-handlebars-template">
-                        <div className="Location-detail">
-                            {{#each this}}
-                    <div className="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" className="btn btn-primary mark" data-id={{@key}}>{{@key}}</button>
-                            <button type="button" className="btn btn-secondary update" data-id={{@key}}>Update</button>
-                    </div>
-                    {{/each}}
-                </div>
-              </script>
-        </div>
-
             </nav>
         </div>;
     }

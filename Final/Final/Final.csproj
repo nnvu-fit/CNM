@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\cordinates.tsx" />
     <None Remove="ClientApp\components\Login.tsx" />
     <None Remove="ClientApp\components\Register.tsx" />
     <None Remove="ClientApp\components\User.tsx" />
@@ -31,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\cordinates.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
     <TypeScriptCompile Include="ClientApp\components\User.tsx" />
